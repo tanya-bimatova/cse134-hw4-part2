@@ -17,28 +17,49 @@ function initProjects() {
         name: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
         image: "https://source.unsplash.com/random/1",
         description:
-          "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+          "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
         ref: "https://en.wikipedia.org/wiki/Wiki",
       },
       {
         name: "qui est esse",
         image: "https://source.unsplash.com/random/2",
         description:
-          "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+          "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
         ref: "https://en.wikipedia.org/wiki/Wiki",
       },
       {
         name: "ea molestias quasi exercitationem repellat qui ipsa sit aut",
         image: "https://source.unsplash.com/random/3",
         description:
-          "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
+          "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
         ref: "https://en.wikipedia.org/wiki/Wiki",
       },
       {
         name: "eum et est occaecati",
         image: "https://source.unsplash.com/random/4",
         description:
-          "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
+          "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
+        ref: "https://en.wikipedia.org/wiki/Wiki",
+      },
+      {
+        name: "dolorem dolore est ipsam",
+        image: "https://source.unsplash.com/random/5",
+        description:
+          "dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut sequi eos ea sed quas dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut sequi eos ea sed quas",
+        ref: "https://en.wikipedia.org/wiki/Wiki",
+      },
+      {
+        name: "nesciunt iure omnis dolorem tempora et accusantium",
+        image: "https://source.unsplash.com/random/6",
+        description:
+          "dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae",
+        ref: "https://en.wikipedia.org/wiki/Wiki",
+      },
+      {
+        name: "optio molestias id quia eum",
+        image: "https://source.unsplash.com/random/7",
+        description:
+          "consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas",
         ref: "https://en.wikipedia.org/wiki/Wiki",
       },
     ],
@@ -48,6 +69,7 @@ function initProjects() {
 
 function loadLocal(projects) {
   let jsonString = JSON.stringify(projects);
+  console.log(jsonString);
   localStorage.setItem("projects", jsonString);
 
   class MyProjectCard extends HTMLElement {
@@ -67,39 +89,7 @@ function loadLocal(projects) {
 
       // Add the styles for the custom element
       const style = document.createElement("style");
-      style.textContent = `
-      /* Define styles for your custom element */
-      :host {
-        --beige: #d5cabd;
-        --purple: #845ec2;
-        display: flex;
-        flex-direction: row;
-        padding: 10px;
-
-        }
-        ul {
-        display: flex;
-        flex-direction: row;
-        flex-flow: row wrap;
-        list-style: none;
-        }
-
-        li {
-          margin: 5px 5px;
-          min-width: 300px;
-          max-width: 40%;
-          border: 4px solid var(--purple);
-          border-radius: 20px;
-          background-color: var(--beige);
-          padding: 50px 50px;
-        }
-        a {
-          color: var(--purple);
-          font-size:larger;
-          font-weight: 700;
-        }
-
-    `;
+      addStyle(style);
 
       // Create and append the course list items to the root ul
       if (storedProjects && storedProjects.projects) {
@@ -121,6 +111,54 @@ function loadLocal(projects) {
   }
   // Register the custom element with the browser
   customElements.define("project-card", MyProjectCard);
+}
+
+function addStyle(style) {
+  style.textContent = `
+  /* Define styles for your custom element */
+  :host {
+    --beige: #d5cabd;
+    --purple: #845ec2;
+    display: flex;
+    flex-direction: row;
+
+    }
+    ul {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    list-style: none;
+    justify-content: space-around;
+    }
+
+    li {
+      margin: 5px 5px 5px 5px;
+      min-width: 300px;
+      max-width: 40%;
+      border: 4px solid var(--purple);
+      border-radius: 20px;
+      background-color: var(--beige);
+      padding: 50px 50px 50px 50px;
+    }
+    a {
+      color: var(--purple);
+      font-size:larger;
+      font-weight: 700;
+    }
+
+    img {
+      float: left;
+      margin-right: 25px;
+    }
+  
+    p {
+      text-align: left;
+    }
+    h2 {
+      font-family: Georgia, serif;
+    }
+
+`;
 }
 
 function loadRemote() {
@@ -154,38 +192,7 @@ function loadRemote() {
 
           // Add the styles for the custom element
           const style = document.createElement("style");
-          style.textContent = `
-          /* Define styles for your custom element */
-          :host {
-            --beige: #d5cabd;
-            --purple: #845ec2;
-            display: flex;
-            flex-direction: row;
-            padding: 10px;
-
-            }
-            ul {
-            display: flex;
-            flex-direction: row;
-            flex-flow: row wrap;
-            list-style: none;
-            }
-
-            li {
-              margin: 5px 5px;
-              min-width: 300px;
-              max-width: 40%;
-              border: 4px solid var(--purple);
-              border-radius: 20px;
-              background-color: var(--beige);
-              padding: 50px 50px;
-            }
-            a {
-              color: var(--purple);
-              font-size:larger;
-              font-weight: 700;
-            }
-          `;
+          addStyle(style);
 
           // Create and append the course list items to the root ul
           if (storedProjects) {
