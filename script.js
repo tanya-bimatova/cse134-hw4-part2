@@ -60,10 +60,8 @@ function loadLocal(projects) {
       // Retrieve the projects data from local storage
       const storedJsonString = localStorage.getItem("projects");
       const storedProjects = JSON.parse(storedJsonString);
-
-      console.log("Local: ");
+      console.log("loadLocal: ");
       console.log(storedProjects);
-
       // Create the root list for the custom element
       const rootList = document.createElement("ul");
 
@@ -126,8 +124,9 @@ function loadLocal(projects) {
 }
 
 function loadRemote() {
-  const apiKey = "$2b$10$cBn2eEf3ZMsge3FbDf.EOen/jGw7vp5nuY8EWKWa.dCzzsXwEgFNy"; // Replace with your JSONBin secret key
+  const apiKey = "$2b$10$cBn2eEf3ZMsge3FbDf.EOen/jGw7vp5nuY8EWKWa.dCzzsXwEgFNy";
   const url = "https://api.jsonbin.io/v3/b/64ccdad78e4aa6225eca8bbc";
+
   fetch(url, {
     headers: {
       "X-Access-Key": apiKey,
@@ -135,20 +134,21 @@ function loadRemote() {
     },
   })
     .then((response) => {
+      console.log("response: ");
       return response.json();
     })
     .then((data) => {
+      console.log("data: ");
       class MyCustomElement extends HTMLElement {
         constructor() {
           super();
-
+          console.log("JSONBin: ");
           // Attach the Shadow DOM to the custom element
           const shadowRoot = this.attachShadow({ mode: "open" });
 
           const storedProjects = data.record.projects;
-          console.log("JSONBin: ");
+          console.log("loadRemote: ");
           console.log(storedProjects);
-
           // Create the root list for the custom element
           const rootList = document.createElement("ul");
 
@@ -157,20 +157,50 @@ function loadRemote() {
           style.textContent = `
           /* Define styles for your custom element */
           :host {
-          display: block;
-          background-color: lightblue;
-          }
-      `;
+            --beige: #d5cabd;
+            --purple: #845ec2;
+            display: flex;
+            flex-direction: row;
+            padding: 10px;
+
+            }
+            ul {
+            display: flex;
+            flex-direction: row;
+            flex-flow: row wrap;
+            list-style: none;
+            }
+
+            li {
+              margin: 5px 5px;
+              min-width: 300px;
+              max-width: 40%;
+              border: 4px solid var(--purple);
+              border-radius: 20px;
+              background-color: var(--beige);
+              padding: 50px 50px;
+            }
+            a {
+              color: var(--purple);
+              font-size:larger;
+              font-weight: 700;
+            }
+          `;
 
           // Create and append the course list items to the root ul
           if (storedProjects) {
-            storedProjects.forEach((course) => {
+            storedProjects.forEach((project) => {
               const listItem = document.createElement("li");
-              listItem.textContent = `${course.courseId}: ${course.courseName}`;
-
+              listItem.innerHTML = `
+            <h2>${project.name}</h2>
+            <img src="${project.image}" width="200" height="200" alt="${project.name} Image">
+            <p>${project.description}</p>
+            <a href="${project.ref}">Read More</a>
+            `;
               rootList.appendChild(listItem);
             });
           }
+
           // Append the elements to the Shadow DOM
           shadowRoot.appendChild(style);
           shadowRoot.appendChild(rootList);
@@ -178,7 +208,7 @@ function loadRemote() {
       }
 
       // Register the custom element with the browser
-      customElements.define("my-custom-element", MyCustomElement);
+      customElements.define("project-card", MyCustomElement);
     })
     .catch((error) => {
       console.error("Error reading data:", error);
